@@ -59,6 +59,87 @@ void allocate(int pid, int size) {
     printf("No hay espacio suficiente.\n");
 }
 
+void allocate_bestfit(int pid, int size) {
+
+    //establezco los valores para comparar
+    int best_index=-1;
+    int best_index_size=MEMORY_SIZE;
+
+    for (int i = 0; i < block_count; i++) {
+        if (blocks[i].free && blocks[i].size >= size) {
+            //comparar el tamano del bloque
+            if(blocks[i].size==size){
+                best_index=i;
+                break;
+            }
+            if(blocks[i].size<best_index_size){
+                best_index= i;
+                best_index_size=blocks[i].size;
+            }}}
+    
+    if(best_index==-1){
+        printf("No hay espacio suficiente.\n");
+        return;    }
+    
+    // Crear nuevobloque si sobra espacio
+    if (blocks[best_index].size > size) {
+        if (block_count >= MAX_BLOCKS) {
+        printf("No se pueden crear más bloques.\n");
+        return;}
+        for (int j = block_count; j > best_index; j--)
+        blocks[j] = blocks[j - 1];
+
+        blocks[best_index + 1].start = blocks[best_index].start + size;
+        blocks[best_index + 1].size = blocks[best_index].size - size;
+        blocks[best_index + 1].free = true;
+        blocks[best_index + 1].process_id = -1;
+
+        blocks[best_index].size = size;
+        block_count++;}
+
+        blocks[best_index].free = false;
+        blocks[best_index].process_id=pid;
+    }
+
+
+void allocate_worstfit(int pid, int size) {
+    //establezco los valores para comparar
+    int worst_index=-1;
+    int worst_index_size=-1;
+
+    for (int i = 0; i < block_count; i++) {
+        if (blocks[i].free && blocks[i].size >= size) {
+            //comparar el tamano del bloque
+            if(blocks[i].size>worst_index_size){
+                worst_index= i;
+                worst_index_size=blocks[i].size;
+            }}}
+    
+    if(worst_index==-1){
+        printf("No hay espacio suficiente.\n");
+        return;    }
+    
+    // Crear nuevobloque si sobra espacio
+    if (blocks[worst_index].size > size) {
+        if (block_count >= MAX_BLOCKS) {
+        printf("No se pueden crear más bloques.\n");
+        return;}
+
+        for (int j = block_count; j > worst_index; j--)
+        blocks[j] = blocks[j - 1];
+
+        blocks[worst_index + 1].start = blocks[worst_index].start + size;
+        blocks[worst_index + 1].size = blocks[worst_index].size - size;
+        blocks[worst_index + 1].free = true;
+        blocks[worst_index + 1].process_id = -1;
+
+        blocks[worst_index].size = size;
+        block_count++;}
+
+        blocks[worst_index].free = false;
+        blocks[worst_index].process_id=pid;
+    }
+
 void free_block(int pid) {
     for (int i = 0; i < block_count; i++) {
         if (blocks[i].process_id == pid) {
