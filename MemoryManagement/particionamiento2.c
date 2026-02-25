@@ -185,7 +185,7 @@ void compact_memory() {
 }
 
 int main() {
-    printf("SIMULACION WORST FIT\n");
+    printf("SIMULACION BEST FIT\n");
     initialize_memory();
     print_memory();
 
