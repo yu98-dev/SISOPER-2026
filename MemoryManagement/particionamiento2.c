@@ -65,6 +65,11 @@ void allocate_bestfit(int pid, int size) {
     int best_index=-1;
     int best_index_size=MEMORY_SIZE;
 
+    if (block_count==1)
+    {
+        best_index=0;
+    }
+    else{
     for (int i = 0; i < block_count; i++) {
         if (blocks[i].free && blocks[i].size >= size) {
             //comparar el tamano del bloque
@@ -75,7 +80,7 @@ void allocate_bestfit(int pid, int size) {
             if(blocks[i].size<best_index_size){
                 best_index= i;
                 best_index_size=blocks[i].size;
-            }}}
+            }}}}
     
     if(best_index==-1){
         printf("No hay espacio suficiente.\n");
@@ -180,15 +185,23 @@ void compact_memory() {
 }
 
 int main() {
+    printf("SIMULACION WORST FIT\n");
     initialize_memory();
+    print_memory();
 
-    allocate(1, 200);
-    allocate(2, 300);
-    allocate(3, 100);
+    allocate_bestfit(1, 200);
+    allocate_bestfit(2, 300);
+    allocate_bestfit(3, 100);
+    allocate_bestfit(4, 50);
 
     print_memory();
 
     free_block(2);
+    free_block(3);
+    print_memory();
+
+    allocate_bestfit(5, 75);
+
     print_memory();
 
     compact_memory();
