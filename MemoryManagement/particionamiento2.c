@@ -220,8 +220,8 @@ int main() {
 // realloc -> cambia el tamaño de un bloque de memoria previamente asignado
 
 // Variables globales (Segmento de Datos)
-int global_var = 42;
-static int static_global_var = 100;
+int global_var = 42; //minimo(?
+static int static_global_var = 100; //tamaño total de la memoria
 
 // Función para mostrar direcciones de memoria de distintos segmentos
 void mostrar_segmentos() {
