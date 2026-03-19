@@ -52,7 +52,7 @@ int main() {
         
         mostrar_pcb(&proceso_hijo1, "SUBPROCESO 1");
         
-        sleep(2);
+        sleep(20);
         exit(0);
     } 
     else if (pid1 > 0) {
@@ -69,7 +69,7 @@ int main() {
             
             mostrar_pcb(&proceso_hijo2, "SUBPROCESO 2");
             
-            sleep(3);
+            sleep(30);
             exit(0);
         } 
         else if (pid2 > 0) {
