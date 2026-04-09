@@ -45,6 +45,28 @@ int main() {
     pid_prod = fork();
 
     if (pid_prod == 0) {
+        // --- Lógica de Productor con Interbloqueo ---
+if (pid_prod == 0) {
+    int fd = open(FIFO_FILE, O_WRONLY);
+    
+    for (int i = 1; i <= 5; i++) {
+        // 1. El productor espera a que el consumidor limpie la memoria (Interbloqueo inicial)
+        while (mem->listo == 1); 
+
+        char buffer[BUFFER_SIZE];
+        snprintf(buffer, BUFFER_SIZE, "%d %d", i, i + 2);
+        
+        printf("[Productor] Intentando escribir en FIFO...\n");
+        // 2. Escribe en el FIFO. Si el buffer del sistema se llena, aquí se bloquea.
+        write(fd, buffer, strlen(buffer) + 1); 
+        
+        // 3. El flag que el consumidor necesita para empezar a leer se activa DESPUÉS
+        mem->listo = 1; 
+        printf("[Productor] Flag 'listo' activado.\n");
+    }
+    exit(0);
+}
+
         // Proceso Productor
         int fd = open(FIFO_FILE, O_WRONLY);
         if (fd < 0) {
