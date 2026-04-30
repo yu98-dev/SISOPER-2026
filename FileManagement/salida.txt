@@ -1,0 +1,6 @@
+HOLA MUCHO GUSTO
+MI NOMBRE ES BARNEY
+BYE
+--ESTADISTICAS--
+total lineas: 3
+total palabras: 8
