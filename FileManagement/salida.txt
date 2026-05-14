@@ -1,6 +1,10 @@
 HOLA MUCHO GUSTO
 MI NOMBRE ES BARNEY
 BYE
+
+AHORA DOS
+
+AHORA TRES
 --ESTADISTICAS--
-total lineas: 3
-total palabras: 8
+Total lineas: 7
+Total palabras: 12
